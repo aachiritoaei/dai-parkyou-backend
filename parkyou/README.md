@@ -7,7 +7,7 @@ DAI Project.
 
 ## Business cases considerations
 * A user is identified by e-mail address only. No auth required.
-1. A user can reserve a parking spot for 1, 2, 3.. 8 hours.
+1. The parking spot automatically expires after 8 hours.
 2. A user cannot reserve a parking spot for the future. 
 3. A user can report an event which is at most available for 8 hours.
 4. A user can reserve only one parking spot. 
