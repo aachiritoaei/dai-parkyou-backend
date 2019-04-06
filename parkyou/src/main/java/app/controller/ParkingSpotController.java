@@ -2,7 +2,6 @@ package app.controller;
 
 import app.model.ParkingSpot;
 import app.service.ParkingSpotService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +17,32 @@ public class ParkingSpotController {
     }
 
     @GetMapping
-    public List<ParkingSpot> getAllSpotsForUserEmail(@RequestParam("userEmail") String userEmail) {
-        return parkingSpotService.listAllParkingSpotsForUserEmail(userEmail);
+    public List<ParkingSpot> getAllParkingSpots() {
+        return parkingSpotService.getAllParkingSpots();
     }
 
+    @GetMapping("/{id}")
+    public ParkingSpot getParkingSpot(@PathVariable("id") Integer parkingSpotId) {
+        return parkingSpotService.getParkingSpotById(parkingSpotId);
+    }
 
+    @GetMapping("/user")
+    public ParkingSpot getParkingSpotByEmail(@RequestParam("userEmail") String userEmail) {
+        return parkingSpotService.getParkingSpotByUserEmail(userEmail);
+    }
+
+    @GetMapping("/free")
+    public List<ParkingSpot> getParkingSpotByEmail() {
+        return parkingSpotService.getAllFreeParkingSpots();
+    }
+
+    @PostMapping("/reset/populate")
+    public List<ParkingSpot> populateParkingSpots() {
+        return parkingSpotService.populateParkingSpots();
+    }
+
+    @PostMapping("/reset/reserve")
+    public List<ParkingSpot> reserveParkingSpots() {
+        return parkingSpotService.reserveParkingSpots();
+    }
 }

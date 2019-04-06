@@ -9,5 +9,9 @@ import java.util.List;
 @Repository
 public interface ParkingSpotRepository extends MongoRepository<ParkingSpot, Integer> {
 
-    List<ParkingSpot> findByUserEmail(String userEmail);
+    ParkingSpot findById(int id);
+
+    ParkingSpot findByUserEmail(String userEmail);
+
+    List<ParkingSpot> findAllByUserEmailIsNull();
 }
