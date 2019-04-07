@@ -32,6 +32,13 @@ public class ParkingSpotService {
         return parkingSpotRepository.findAllByUserEmailIsNull();
     }
 
+    public ParkingSpot reserve(Integer parkinSpotId, String userEmail) {
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(parkinSpotId);
+        parkingSpot.setUserEmail(userEmail);
+        return parkingSpotRepository.save(parkingSpot);
+    }
+
     public List<ParkingSpot> populateParkingSpots() {
         List<ParkingSpot> parkingSpotList = new ArrayList<>();
 

@@ -19,7 +19,7 @@ DAI Project.
 
 ## Parking APIs required
 1. Reserve parking spot.
-    - `POST /parking/spots`
+    - `POST /parking/spots/{id}`
     - RequestParam: userEmail, parkingSpot, duration
 2. Find available parking spots.
     - `GET /parking/spots`

@@ -36,6 +36,12 @@ public class ParkingSpotController {
         return parkingSpotService.getAllFreeParkingSpots();
     }
 
+    @PostMapping("/{id}")
+    public ParkingSpot reserveParkingSpot(@PathVariable("id") Integer parkingSpotId,
+                                          @RequestParam("userEmail") String userEmail) {
+        return parkingSpotService.reserve(parkingSpotId, userEmail);
+    }
+
     @PostMapping("/reset/populate")
     public List<ParkingSpot> populateParkingSpots() {
         return parkingSpotService.populateParkingSpots();
