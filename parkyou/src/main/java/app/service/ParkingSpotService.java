@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParkingSpotService {
@@ -16,34 +17,49 @@ public class ParkingSpotService {
         this.parkingSpotRepository = parkingSpotRepository;
     }
 
-    public ParkingSpot getParkingSpotById(int id) {
-        return parkingSpotRepository.findById(id);
+    public List<ParkingSpot> getAllParkingSpotsForParking(Integer parkingId) {
+        return parkingSpotRepository.findAllByParkingId(parkingId);
     }
 
-    public ParkingSpot getParkingSpotByUserEmail(String userEmail) {
-        return parkingSpotRepository.findByUserEmail(userEmail);
+    public List<ParkingSpot> getAllParkingSpotsForUserEmail(String userEmail) {
+        return parkingSpotRepository.findAllByUserEmail(userEmail);
     }
 
-    public List<ParkingSpot> getAllParkingSpots() {
-        return parkingSpotRepository.findAll();
+    public List<ParkingSpot> getAllFreeParkingSpotsForParking(Integer parkingId) {
+        return parkingSpotRepository.findAllByParkingIdAndUserEmailIsNull(parkingId);
     }
 
-    public List<ParkingSpot> getAllFreeParkingSpots() {
-        return parkingSpotRepository.findAllByUserEmailIsNull();
-    }
-
-    public ParkingSpot reserve(Integer parkinSpotId, String userEmail) {
+    public ParkingSpot reserve(Integer parkingId, Integer parkinSpotId, String userEmail) {
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setId(parkinSpotId);
+        parkingSpot.setParkingId(parkingId);
         parkingSpot.setUserEmail(userEmail);
         return parkingSpotRepository.save(parkingSpot);
     }
 
+    public ParkingSpot free(Integer parkingId, Integer parkinSpotId, String userEmail) {
+        Optional<ParkingSpot> parkingSpot1 = parkingSpotRepository.findById(parkinSpotId);
+
+        if(!parkingSpot1.isPresent())
+            return null;
+
+        if (!userEmail.equals(parkingSpot1.get().getUserEmail()))
+            return null;
+
+        ParkingSpot parkingSpot = new ParkingSpot();
+        parkingSpot.setId(parkinSpotId);
+        parkingSpot.setParkingId(parkingId);
+        parkingSpot.setUserEmail(null);
+        return parkingSpotRepository.save(parkingSpot);
+    }
+
     public List<ParkingSpot> populateParkingSpots() {
+        parkingSpotRepository.deleteAll();
+
         List<ParkingSpot> parkingSpotList = new ArrayList<>();
 
         for (int j = 1; j <= 4; ++j) {
-            for (int i = 1; i <= 10; ++i) {
+            for (int i = (j - 1) * 10 + 1; i <= (j - 1) * 10 + 10; ++i) {
                 ParkingSpot parkingSpot = new ParkingSpot();
                 parkingSpot.setId(i);
                 parkingSpot.setParkingId(j);
@@ -58,29 +74,23 @@ public class ParkingSpotService {
     public List<ParkingSpot> reserveParkingSpots() {
         List<ParkingSpot> parkingSpotList = new ArrayList<>();
 
-        ParkingSpot parkingSpot1 = new ParkingSpot();
-        parkingSpot1.setId(1);
-        parkingSpot1.setParkingId(1);
-        parkingSpot1.setUserEmail("example11@example.com");
-        parkingSpotList.add(parkingSpot1);
+        for (int i = 1; i <= 5; ++i) {
+            ParkingSpot parkingSpot = new ParkingSpot();
+            parkingSpot.setId(i);
+            parkingSpot.setParkingId(1);
+            parkingSpot.setUserEmail("example1@test.com");
 
-        ParkingSpot parkingSpot2 = new ParkingSpot();
-        parkingSpot2.setId(2);
-        parkingSpot2.setParkingId(2);
-        parkingSpot2.setUserEmail("example22@example.com");
-        parkingSpotList.add(parkingSpot2);
+            parkingSpotList.add(parkingSpot);
+        }
 
-        ParkingSpot parkingSpot3 = new ParkingSpot();
-        parkingSpot3.setId(3);
-        parkingSpot3.setParkingId(3);
-        parkingSpot3.setUserEmail("example33@example.com");
-        parkingSpotList.add(parkingSpot3);
+        for (int i = 21; i <= 25; ++i) {
+            ParkingSpot parkingSpot = new ParkingSpot();
+            parkingSpot.setId(i);
+            parkingSpot.setParkingId(3);
+            parkingSpot.setUserEmail("example3@test.com");
 
-        ParkingSpot parkingSpot4 = new ParkingSpot();
-        parkingSpot4.setId(4);
-        parkingSpot4.setParkingId(4);
-        parkingSpot4.setUserEmail("example44@example.com");
-        parkingSpotList.add(parkingSpot4);
+            parkingSpotList.add(parkingSpot);
+        }
 
         return parkingSpotRepository.saveAll(parkingSpotList);
     }

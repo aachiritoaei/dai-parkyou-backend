@@ -27,39 +27,39 @@ public class ParkingController {
         return parkingService.getAllParkings();
     }
 
-    @GetMapping("/{id}")
-    public List<ParkingSpot> getAllParkingSpots(@PathVariable("id") Integer parkingId) {
-        return parkingSpotService.getAllParkingSpots();
+    @GetMapping("/{parkingId}")
+    public List<ParkingSpot> getAllParkingSpotsForParking(@PathVariable("parkingId") Integer parkingId) {
+        return parkingSpotService.getAllParkingSpotsForParking(parkingId);
     }
 
-    @GetMapping("/{id}")
-    public ParkingSpot getParkingSpot(@PathVariable("id") Integer parkingSpotId) {
-        return parkingSpotService.getParkingSpotById(parkingSpotId);
+    @GetMapping("/{parkingId}/free")
+    public List<ParkingSpot> getAllFreeParkingSpotsForParking(@PathVariable("parkingId") Integer parkingId) {
+        return parkingSpotService.getAllFreeParkingSpotsForParking(parkingId);
     }
 
     @GetMapping("/user")
-    public ParkingSpot getParkingSpotByEmail(@RequestParam("userEmail") String userEmail) {
-        return parkingSpotService.getParkingSpotByUserEmail(userEmail);
+    public List<ParkingSpot> getAllParkingSpotsForUserEmail(@RequestParam("userEmail") String userEmail) {
+        return parkingSpotService.getAllParkingSpotsForUserEmail(userEmail);
     }
 
-    @GetMapping("/free")
-    public List<ParkingSpot> getParkingSpotByEmail() {
-        return parkingSpotService.getAllFreeParkingSpots();
-    }
-
-    @PostMapping("/{id}")
-    public ParkingSpot reserveParkingSpot(@PathVariable("id") Integer parkingSpotId,
+    @PostMapping("/{parkingId}/{parkingSpotId}")
+    public ParkingSpot reserveParkingSpot(@PathVariable("parkingId") Integer parkingId,
+                                          @PathVariable("parkingSpotId") Integer parkingSpotId,
                                           @RequestParam("userEmail") String userEmail) {
-        return parkingSpotService.reserve(parkingSpotId, userEmail);
+        return parkingSpotService.reserve(parkingId, parkingSpotId, userEmail);
+    }
+
+    @DeleteMapping("/{parkingId}/{parkingSpotId}")
+    public ParkingSpot freeParkingSpot(@PathVariable("parkingId") Integer parkingId,
+                                       @PathVariable("parkingSpotId") Integer parkingSpotId,
+                                       @RequestParam("userEmail") String userEmail) {
+        return parkingSpotService.free(parkingId, parkingSpotId, userEmail);
     }
 
     @PostMapping("/reset/populate")
-    public List<ParkingSpot> populateParkingSpots() {
-        return parkingSpotService.populateParkingSpots();
-    }
-
-    @PostMapping("/reset/reserve")
-    public List<ParkingSpot> reserveParkingSpots() {
-        return parkingSpotService.reserveParkingSpots();
+    public void populateParkingSpots() {
+        parkingService.populateParkings();
+        parkingSpotService.populateParkingSpots();
+        parkingSpotService.reserveParkingSpots();
     }
 }

@@ -21,6 +21,8 @@ public class ParkingService {
     }
 
     public List<Parking> populateParkings() {
+        parkingRepository.deleteAll();
+
         List<Parking> parkingList = new ArrayList<>();
 
         Parking parking1 = new Parking();
