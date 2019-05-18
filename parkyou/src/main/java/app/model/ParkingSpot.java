@@ -8,6 +8,7 @@ public class ParkingSpot {
 
     @Id
     private Integer id;
+    private Integer parkingId;
     private String userEmail;
 
     public Integer getId() {
@@ -24,5 +25,13 @@ public class ParkingSpot {
 
     public void setUserEmail(String userEmail) {
         this.userEmail = userEmail;
+    }
+
+    public Integer getParkingId() {
+        return parkingId;
+    }
+
+    public void setParkingId(Integer parkingId) {
+        this.parkingId = parkingId;
     }
 }

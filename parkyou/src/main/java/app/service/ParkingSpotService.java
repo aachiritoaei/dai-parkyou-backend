@@ -42,11 +42,14 @@ public class ParkingSpotService {
     public List<ParkingSpot> populateParkingSpots() {
         List<ParkingSpot> parkingSpotList = new ArrayList<>();
 
-        for (int i = 1; i <= 100; ++i) {
-            ParkingSpot parkingSpot = new ParkingSpot();
-            parkingSpot.setId(i);
+        for (int j = 1; j <= 4; ++j) {
+            for (int i = 1; i <= 10; ++i) {
+                ParkingSpot parkingSpot = new ParkingSpot();
+                parkingSpot.setId(i);
+                parkingSpot.setParkingId(j);
 
-            parkingSpotList.add(parkingSpot);
+                parkingSpotList.add(parkingSpot);
+            }
         }
 
         return parkingSpotRepository.saveAll(parkingSpotList);
@@ -57,23 +60,27 @@ public class ParkingSpotService {
 
         ParkingSpot parkingSpot1 = new ParkingSpot();
         parkingSpot1.setId(1);
-        parkingSpot1.setUserEmail("example1@example.com");
+        parkingSpot1.setParkingId(1);
+        parkingSpot1.setUserEmail("example11@example.com");
         parkingSpotList.add(parkingSpot1);
 
-        ParkingSpot parkingSpot25 = new ParkingSpot();
-        parkingSpot25.setId(25);
-        parkingSpot25.setUserEmail("example25@example.com");
-        parkingSpotList.add(parkingSpot25);
+        ParkingSpot parkingSpot2 = new ParkingSpot();
+        parkingSpot2.setId(2);
+        parkingSpot2.setParkingId(2);
+        parkingSpot2.setUserEmail("example22@example.com");
+        parkingSpotList.add(parkingSpot2);
 
-        ParkingSpot parkingSpot36 = new ParkingSpot();
-        parkingSpot36.setId(36);
-        parkingSpot36.setUserEmail("example36@example.com");
-        parkingSpotList.add(parkingSpot36);
+        ParkingSpot parkingSpot3 = new ParkingSpot();
+        parkingSpot3.setId(3);
+        parkingSpot3.setParkingId(3);
+        parkingSpot3.setUserEmail("example33@example.com");
+        parkingSpotList.add(parkingSpot3);
 
-        ParkingSpot parkingSpot99 = new ParkingSpot();
-        parkingSpot99.setId(99);
-        parkingSpot99.setUserEmail("example99@example.com");
-        parkingSpotList.add(parkingSpot99);
+        ParkingSpot parkingSpot4 = new ParkingSpot();
+        parkingSpot4.setId(4);
+        parkingSpot4.setParkingId(4);
+        parkingSpot4.setUserEmail("example44@example.com");
+        parkingSpotList.add(parkingSpot4);
 
         return parkingSpotRepository.saveAll(parkingSpotList);
     }

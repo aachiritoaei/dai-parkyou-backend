@@ -2,10 +2,7 @@ package app.controller;
 
 import app.model.Event;
 import app.service.EventService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,13 +16,19 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
 
+    @PostMapping
+    public Event saveEvent(@RequestParam(value = "userEmail") String userEmail,
+                           @RequestParam(value = "description") String description) {
+        return eventService.saveEvent(userEmail, description);
+    }
+
     @PostMapping("/reset/populate")
     public List<Event> populateEvents() {
-        return eventService.populateEvents();
+        return eventService.resetPopulateEvents();
     }
 }

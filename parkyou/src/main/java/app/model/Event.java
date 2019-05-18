@@ -13,10 +13,10 @@ public class Event {
     @Id
     private String id;
     private String userEmail;
-
     @Field
-    @Indexed(name = "publishDateIndex", expireAfterSeconds = 60)
-    Date publishDate;
+    @Indexed(name = "publishDateIndex", expireAfterSeconds = 300)
+    private Date publishDate;
+    private String description;
 
     public String getId() {
         return id;
@@ -40,5 +40,13 @@ public class Event {
 
     public void setPublishDate(Date publishDate) {
         this.publishDate = publishDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

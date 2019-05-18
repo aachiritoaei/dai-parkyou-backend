@@ -1,23 +1,34 @@
 package app.controller;
 
+import app.model.Parking;
 import app.model.ParkingSpot;
+import app.service.ParkingService;
 import app.service.ParkingSpotService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/parking/spots")
-public class ParkingSpotController {
+@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("/parking")
+public class ParkingController {
 
+    private ParkingService parkingService;
     private ParkingSpotService parkingSpotService;
 
-    public ParkingSpotController(ParkingSpotService parkingSpotService) {
+    public ParkingController(ParkingService parkingService,
+                             ParkingSpotService parkingSpotService) {
+        this.parkingService = parkingService;
         this.parkingSpotService = parkingSpotService;
     }
 
-    @GetMapping
-    public List<ParkingSpot> getAllParkingSpots() {
+    @GetMapping("/all")
+    public List<Parking> getAllParkings() {
+        return parkingService.getAllParkings();
+    }
+
+    @GetMapping("/{id}")
+    public List<ParkingSpot> getAllParkingSpots(@PathVariable("id") Integer parkingId) {
         return parkingSpotService.getAllParkingSpots();
     }
 
