@@ -30,9 +30,15 @@ public class ParkingSpotService {
     }
 
     public ParkingSpot reserve(Integer parkingId, Integer parkinSpotId, String userEmail) {
+        Optional<ParkingSpot> parkingSpot1 = parkingSpotRepository.findById(parkinSpotId);
+
+        if (!parkingSpot1.isPresent())
+            return null;
+
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setId(parkinSpotId);
         parkingSpot.setParkingId(parkingId);
+        parkingSpot.setParkingName(parkingSpot1.get().getParkingName());
         parkingSpot.setUserEmail(userEmail);
         return parkingSpotRepository.save(parkingSpot);
     }
@@ -40,7 +46,7 @@ public class ParkingSpotService {
     public ParkingSpot free(Integer parkingId, Integer parkinSpotId, String userEmail) {
         Optional<ParkingSpot> parkingSpot1 = parkingSpotRepository.findById(parkinSpotId);
 
-        if(!parkingSpot1.isPresent())
+        if (!parkingSpot1.isPresent())
             return null;
 
         if (!userEmail.equals(parkingSpot1.get().getUserEmail()))
@@ -49,6 +55,7 @@ public class ParkingSpotService {
         ParkingSpot parkingSpot = new ParkingSpot();
         parkingSpot.setId(parkinSpotId);
         parkingSpot.setParkingId(parkingId);
+        parkingSpot.setParkingName(parkingSpot1.get().getParkingName());
         parkingSpot.setUserEmail(null);
         return parkingSpotRepository.save(parkingSpot);
     }
@@ -64,6 +71,21 @@ public class ParkingSpotService {
                 parkingSpot.setId(i);
                 parkingSpot.setParkingId(j);
 
+                switch (j) {
+                    case 1:
+                        parkingSpot.setParkingName("Parcare Unirii");
+                        break;
+                    case 2:
+                        parkingSpot.setParkingName("Parcare Victoriei");
+                        break;
+                    case 3:
+                        parkingSpot.setParkingName("Parcare Izvor");
+                        break;
+                    case 4:
+                        parkingSpot.setParkingName("Parcare Parlament");
+                        break;
+                }
+
                 parkingSpotList.add(parkingSpot);
             }
         }
@@ -78,6 +100,7 @@ public class ParkingSpotService {
             ParkingSpot parkingSpot = new ParkingSpot();
             parkingSpot.setId(i);
             parkingSpot.setParkingId(1);
+            parkingSpot.setParkingName("Parcare Unirii");
             parkingSpot.setUserEmail("example1@test.com");
 
             parkingSpotList.add(parkingSpot);
@@ -87,6 +110,7 @@ public class ParkingSpotService {
             ParkingSpot parkingSpot = new ParkingSpot();
             parkingSpot.setId(i);
             parkingSpot.setParkingId(3);
+            parkingSpot.setParkingName("Parcare Izvor");
             parkingSpot.setUserEmail("example3@test.com");
 
             parkingSpotList.add(parkingSpot);

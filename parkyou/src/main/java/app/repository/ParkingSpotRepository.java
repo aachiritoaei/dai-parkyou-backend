@@ -16,4 +16,5 @@ public interface ParkingSpotRepository extends MongoRepository<ParkingSpot, Inte
     List<ParkingSpot> findAllByUserEmail(String userEmail);
 
     List<ParkingSpot> findAllByParkingIdAndUserEmailIsNull(int parkingId);
+
 }

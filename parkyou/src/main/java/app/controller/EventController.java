@@ -5,8 +5,10 @@ import app.service.EventService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/events")
 public class EventController {
 
@@ -23,8 +25,8 @@ public class EventController {
 
     @PostMapping
     public Event saveEvent(@RequestParam(value = "userEmail") String userEmail,
-                           @RequestParam(value = "description") String description) {
-        return eventService.saveEvent(userEmail, description);
+                           @RequestBody Map<String, String> requestBody) {
+        return eventService.saveEvent(userEmail, requestBody.get("description"));
     }
 
     @PostMapping("/reset/populate")

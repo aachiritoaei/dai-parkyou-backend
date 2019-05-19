@@ -4,6 +4,7 @@ import app.model.Event;
 import app.repository.EventRepository;
 import org.springframework.stereotype.Service;
 
+import java.rmi.server.UID;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ public class EventService {
         Event event = new Event();
 
         event.setId(UUID.randomUUID().toString());
+        event.setPublishDate(new Date());
         event.setUserEmail(userEmail);
         event.setDescription(description);
 
